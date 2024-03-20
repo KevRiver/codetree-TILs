@@ -4,7 +4,6 @@ using namespace std;
 int N;
 int dp[501][501];
 int grid[501][501];
-bool visited[501][501];
 
 const int dy[] = {-1, 0, 1, 0};
 const int dx[] = {0, -1, 0, 1};
@@ -19,14 +18,9 @@ int dfs(int y, int x){
 
         if(ny < 0 || nx < 0 || ny >= N || nx >= N) continue;
         if(grid[ny][nx] <= grid[y][x]) continue;
-        if(visited[ny][nx]) continue;
-        visited[ny][nx] = true;
-
         max_len = max(max_len, dfs(ny, nx));
-
-        visited[ny][nx] = false;
     }
-    return 1 + max_len;
+    return dp[y][x] = 1 + max_len;
 }
 
 int main() {
