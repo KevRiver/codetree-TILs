@@ -8,24 +8,20 @@ int dp[100][100];
 
 int simulate(int lower_bound){
     
-    function<int(int)> flatmap = [=](int num){
-        return num >= lower_bound ? num : INT_MAX;
-    };
+    for(int i=0; i<N; ++i)
+        for(int j=0; j<N; ++j)
+            grid[i][j] = grid[i][j] >= lower_bound ? grid[i][j] : INT_MAX;
 
-    dp[0][0] = flatmap(grid[0][0]);
-    for(int j=1; j<N; ++j){
-        int cur = flatmap(grid[0][0]);
-        dp[0][j] = max(dp[0][j-1], cur);
-    }
-    for(int i=1; i<N; ++i){
-        int cur = flatmap(grid[i][0]);
-        dp[i][0] = max(dp[i-1][0], cur);
-    }
+    dp[0][0] = grid[0][0];
+    for(int j=1; j<N; ++j)
+        dp[0][j] = max(dp[0][j-1], grid[0][j]);
+
+    for(int i=1; i<N; ++i)
+        dp[i][0] = max(dp[i-1][0], grid[i][0]);
 
     for(int i=1; i<N; ++i){
         for(int j=1; j<N; ++j){
-            int cur = flatmap(grid[i][j]);
-            dp[i][j] = max(min(dp[i-1][j], dp[i][j-1]), cur);
+            dp[i][j] = max(min(dp[i-1][j], dp[i][j-1]), grid[i][j]);
         }
     }
     return dp[N-1][N-1];
