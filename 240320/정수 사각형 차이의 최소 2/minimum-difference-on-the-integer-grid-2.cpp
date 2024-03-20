@@ -29,15 +29,24 @@ int main() {
 
                 Node a = {min(above.min, cur), max(above.max, cur)};
                 Node b = {min(left.min, cur), max(left.max, cur)};
-
+                if(a.abs() <= b.abs()){
+                    cout << "above" << "\n";
+                    dp[i][j] = a;
+                } else {
+                    cout << "left" << "\n";
+                    dp[i][j] = b;
+                }
                 dp[i][j] = a.abs() <= b.abs() ? a : b;
             } else if(i > 0){
                 const Node& above = dp[i-1][j];
+                cout << "above" << '\n';
                 dp[i][j] = {min(above.min, cur), max(above.max, cur)};
             } else if(j > 0){
                 const Node& left = dp[i][j-1];
+                cout << "left" << '\n';
                 dp[i][j] = {min(left.min, cur), max(left.max, cur)};
             } else{
+                cout << "start" << '\n';
                 dp[i][j] = {cur, cur};
             }
         }
