@@ -9,7 +9,13 @@ struct Node{
         return max-min;
     }
 };
-Node dp[100][100]; // min, max
+Node dp1[100][100]; // 최대값이 최소일 때
+Node dp2[100][100]; // 최소값이 최대일 때
+
+Node merge(const Node& a, const Node& b){
+    Node result = {min(a.min, b.min), max(a.max, b.max)};
+    return result;
+}
 
 int main() {
     int n; cin >> n;
@@ -18,29 +24,31 @@ int main() {
         for(int j=0; j<n; ++j)
             cin >> grid[i][j];
 
-    // 이전 노드의 min, max 와 현재 값을 비교해서 현재 노드가 갱신된다
-    // 갱신된 노드의 최대 최소 차이가 작은 것을 dp에 남긴다
+
     for(int i=0; i<n; ++i){
         for(int j=0; j<n; ++j){
             int cur = grid[i][j];
             if(i > 0 && j > 0){
-                const Node& above = dp[i-1][j];
-                const Node& left = dp[i][j-1];
-
-                Node a = {min(above.min, cur), max(above.max, cur)};
-                Node b = {min(left.min, cur), max(left.max, cur)};
-                dp[i][j] = a.abs() <= b.abs() ? a : b;
+                const Node& less_max = dp1[i-1][j].max <= dp1[i][j-1].max ? dp1[i-1][j] : dp1[i][j-1];
+                dp1[i][j] = merge(less_max, {cur, cur});
+                const Node& greater_min = dp2[i-1][j].min >= dp2[i][j-1].min ? dp2[i-1][j] : dp2[i][j-1];
+                dp2[i][j] = merge(greater_min, {cur, cur});
             } else if(i > 0){
-                const Node& above = dp[i-1][j];
-                dp[i][j] = {min(above.min, cur), max(above.max, cur)};
+                dp1[i][j] = merge(dp1[i-1][j], {cur, cur});
+                dp2[i][j] = merge(dp2[i-1][j], {cur, cur});
             } else if(j > 0){
-                const Node& left = dp[i][j-1];
-                dp[i][j] = {min(left.min, cur), max(left.max, cur)};
-            } else{
-                dp[i][j] = {cur, cur};
+                dp1[i][j] = merge(dp1[i][j-1], {cur, cur});
+                dp2[i][j] = merge(dp2[i][j-1], {cur, cur});
+            } else {
+                dp1[i][j] = {cur, cur};
+                dp2[i][j] = {cur, cur};
             }
         }
     }
-    cout << dp[n-1][n-1].abs() << '\n';
+    int v = dp1[n-1][n-1].abs();
+    int w = dp2[n-1][n-1].abs();
+    int answer = min(v, w);
+    cout << answer << '\n';
+
     return 0;
 }
