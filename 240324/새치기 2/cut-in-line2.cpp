@@ -18,7 +18,9 @@ vector<string> tokenize(const string& s, const char* delimiter){
 }
 
 int main() {
-    
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+
     int N, M, Q;
     cin >> N >> M >> Q;
 
@@ -36,7 +38,8 @@ int main() {
         const list<string>& l = lane[lane_idx];
         for(auto it = l.begin(); it != l.end(); ++it){
             int pos = distance(l.begin(), it);
-            tracker[*it] = {lane_idx, pos};
+            tracker[*it].l = lane_idx;
+            tracker[*it].pos = pos;
         }
     };
 
