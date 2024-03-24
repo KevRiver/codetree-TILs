@@ -4,7 +4,8 @@ using namespace std;
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    
+    int n; cin >> n;
     unordered_map<int, int> min_y;
     for(int i=0; i<n; ++i){
         int x, y;
@@ -20,6 +21,6 @@ int main() {
         sum += it->second;
     }
     cout << sum;
-    
+
     return 0;
 }
