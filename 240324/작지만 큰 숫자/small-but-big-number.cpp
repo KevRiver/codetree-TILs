@@ -18,17 +18,17 @@ int main() {
         }
 
         auto it = lower_bound(begin(seq), end(seq), q);
-        if(it == seq.end()){
-            cout << -1 << '\n';
-            continue;
-        }
-        
-        if(*it > q && it == seq.begin()){
+
+        // 모든 원소가 q 보다 크다
+        if(it == seq.begin() && *it > q){
             cout << -1 << '\n';
             continue;
         }
 
-        if(*it > q) advance(it, -1);
+        // 모든 원소가 q 보다 작거나 현재 it 값이 q보다 크다
+        if(it == seq.end() || *it > q){
+            advance(it, -1);
+        } 
         cout << *it << '\n';
         seq.erase(it);        
     }
