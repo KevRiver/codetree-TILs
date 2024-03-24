@@ -3,21 +3,32 @@ using namespace std;
 
 int main() {
     int n; cin >> n;
-    multiset<int> s;
+    auto cmp = [](int l, int r){
+        return l > r;
+    };
+    priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
+    int elems[3];
     for(int i=0; i<n; ++i){
-        int e; cin >> e;
-        s.insert(e);
-        if(s.size() < 3){
+        int e;
+        cin >> e;
+        pq.push(e);
+        if(pq.size() < 3){
             cout << -1 << '\n';
             continue;
         }
-        auto it = s.begin();
-        long long product = *it;
-        for(int j=0; j<2; ++j){
-            ++it;
-            product *= *it;
+
+        for(int j=0; j<3; ++j){
+            elems[j] = pq.top();
+            pq.pop();
         }
+
+        long long product = (long long)elems[0] * elems[1] * elems[2];
         cout << product << '\n';
+
+        for(int j=0; j<3; ++j){
+            pq.push(elems[j]);
+        }
+
     }
 
     return 0;
