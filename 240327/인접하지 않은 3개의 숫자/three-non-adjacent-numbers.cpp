@@ -9,13 +9,10 @@ int main() {
     }
 
     vector<int> l(N, 0);
-    for(int i=2; i<=N-3; ++i){
-        l[i] = max(l[i-1], arr[i-2]);
-    }
-
     vector<int> r(N, 0);
-    for(int i=N-3; i>=2; --i){
-        r[i] = max(r[i+1], arr[i+2]);
+    for(int i=2, j=N-3; i<=N-3 && j>=2; ++i, --j){
+        l[i] = max(l[i-1], arr[i-2]);
+        r[j] = max(r[j+1], arr[j+2]);
     }
     
     int answer = -1;
