@@ -7,15 +7,16 @@ using namespace std;
 int main() {
     int N; cin >> N;
     vector<char> B(N); for(char& e: B) cin >> e;
-    vector<vector<int>> rock(2, vector<int>(N));
+    
+    vector<vector<int>> rock(2, vector<int>(N+1, 0));
     rock[L][0] = B[0] == 'S' ? 1 : 0;
     rock[R][N-1] = B[N-1] == 'S' ? 1 : 0;
     
-    vector<vector<int>> scissors(2, vector<int>(N));
+    vector<vector<int>> scissors(2, vector<int>(N+1, 0));
     scissors[L][0] = B[0] == 'P' ? 1 : 0;
     scissors[R][N-1] = B[N-1] == 'P' ? 1 : 0;
 
-    vector<vector<int>> paper(2, vector<int>(N));
+    vector<vector<int>> paper(2, vector<int>(N+1, 0));
     paper[L][0] = B[0] == 'H' ? 1 : 0;
     paper[R][N-1] = B[N-1] == 'H' ? 1 : 0;
     
@@ -30,7 +31,7 @@ int main() {
         paper[R][i] = paper[R][i+1] + (B[i] == 'H' ? 1 : 0);
     }
     int answer = -1;
-    for(int k=0; k<N-1; ++k){
+    for(int k=0; k<N; ++k){
         answer = max(answer, rock[L][k] + scissors[R][k+1]);
         answer = max(answer, rock[L][k] + paper[R][k+1]);
         answer = max(answer, scissors[L][k] + rock[R][k+1]);
