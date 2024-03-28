@@ -14,14 +14,14 @@ int main() {
         int b; cin >> b;
         m[a]++;
         m[b]--;
-    }
+    } // O(nlogn)
 
     int acc = 0;
     int cnt = 0;
     for(auto it = m.begin(); it != m.end(); ++it){
         acc += it->second;
         if(acc == 0) ++cnt;
-    }
+    } // O(2n)
     cout << cnt << '\n';
     
 
