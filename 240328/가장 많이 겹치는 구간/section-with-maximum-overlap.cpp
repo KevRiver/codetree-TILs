@@ -3,12 +3,12 @@ using namespace std;
 
 #define pii pair<int, int>
 
-int x[100'001];
+int x[200'001];
 
 int main() {
 
     int n; cin >> n;
-    int min_x = 100'001;
+    int min_x = 200'001;
     int max_x = -1;
     for(int i=0; i<n; ++i){
         int a; cin >> a;
