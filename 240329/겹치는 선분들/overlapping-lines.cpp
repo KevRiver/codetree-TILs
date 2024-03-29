@@ -7,7 +7,7 @@ int main() {
     int N; cin >> N;
     int K; cin >> K;
 
-    unordered_map<int, int> points;
+    map<int, int> points;
     int src = 0;
     for(int i=0; i<N; ++i){
         int len; cin >> len;
