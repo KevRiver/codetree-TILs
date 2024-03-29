@@ -28,7 +28,7 @@ int main() {
     int start = INF;
     for(auto it = points.begin(); it != points.end(); ++it){
         acc += it->second;
-        if(acc > 1){
+        if(acc >= K){
             start = min(start, it->first);
         } else {
             int len = it->first - start;
