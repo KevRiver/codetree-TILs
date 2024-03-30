@@ -24,7 +24,7 @@ int main() {
 
     vector<pii> points;
     for(int i=0; i<N; ++i){
-        int x1, x1;
+        int x1, x2;
         tie(x1, x2) = segments[i];
         points.push_back({x1, 1});
         points.push_back({x2, -1});
