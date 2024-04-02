@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define ll long long
+
 int main() {
     string s; cin >> s;
     int len = s.size();
@@ -14,7 +16,7 @@ int main() {
         if(s[i] == ')' && s[i+1] == ')') r[i]++;
     }
 
-    int cnt = 0;
+    ll cnt = 0;
     for(int i=0; i<len-3; ++i){
         if(s[i] != '(' || s[i+1] != '(')
             continue;
