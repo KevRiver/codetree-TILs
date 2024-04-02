@@ -6,22 +6,18 @@ using namespace std;
 int main() {
     int n; cin >> n;
     vector<ll> energy(n, 0);
-    for(int i=0; i<n-1; ++i) cin >> energy[i];
+    for(int i=1; i<n; ++i) cin >> energy[i];
     vector<ll> cost(n, 0); // 에너지 1을 채우는 비용
     for(int i=0; i<n; ++i) cin >> cost[i];
 
-    vector<ll> e(n, 0);
-    e[n-1] = 0;
-    for(int i=n-2; i>=0; --i){
-        e[i] = e[i+1] + energy[i];
-    }
+    vector<ll> c(n); 
+    c[0] = cost[0];
+    for(int i=1; i<n; ++i) c[i] = min(c[i-1], cost[i]);
 
-    vector<ll> c(n, 0);
-    c[n-1] = 0;
-    for(int i=n-2; i>=0; --i){
-        c[i] = min(cost[i]*e[i], cost[i]*energy[i] + c[i+1]);
-    }
-    cout << c[0] << '\n';
-
+    ll ans = 0;
+    for(int x=1; x<n; ++x){
+        ans += c[x-1]*energy[x];
+    } // x 번째 노드로 가기 위한 최소 비용 = x 번째 노드 이전까지 등장했던 최저가 비용 * 다음 노드로 가기 위해 필요한 에너지
+    cout << ans << '\n';
     return 0;
 }
