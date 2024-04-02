@@ -10,21 +10,21 @@ int main() {
     vector<int> bombs(N);
     for(int i=0; i<N; ++i) cin >> bombs[i];
 
-    multiset<int> s;
-    
-    // 0
-    // 3 4 2
-    for(int i=1; i<K+1; ++i) 
-        s.insert(bombs[i]);
+    unordered_map<int, int> idx;
+    vector<int> r(N);
+    for(int i=N-1; i>=0; --i){
+        if(idx.find(bombs[i]) == idx.end()){
+            r[i] = -1;
+        } else {
+            r[i] = idx[bombs[i]];
+        }
+        idx[bombs[i]] = i;
+    }
     
     int ans = -1;
-    for(int i=0; i<N-1; ++i){
-        if(s.find(bombs[i]) != s.end())
+    for(int i=0; i<N; ++i){
+        if(r[i] != -1 && r[i] - i <= K)
             ans = max(ans, bombs[i]);
-            
-        if(i+1+K < N)
-            s.insert(bombs[i+1+K]);
-        s.erase(s.find(bombs[i+1]));
     }
     cout << ans << '\n';
 
