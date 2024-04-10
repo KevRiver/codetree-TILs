@@ -27,9 +27,10 @@ int main() {
     for(int i=0; i<n; ++i){
         while(j < n && distance(i, j) <= 2*k){
             cnt += candies[j].second;
-            ++j;
-            answer = max(answer, cnt);
+            ++j;   
         }
+        answer = max(answer, cnt);
+        
         cnt -= candies[i].second;
     }
     cout << answer << '\n';
