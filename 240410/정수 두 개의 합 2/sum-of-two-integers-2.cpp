@@ -5,23 +5,20 @@ int main() {
     int n, k;
     cin >> n >> k;
     
-    vector<int> arr(n); 
-    for(int& e: arr) cin >> e;
+    int arr[100'001] = {0, }; 
+    for(int i=1; i<=n; ++i)
+        cin >> arr[i];
+    sort(arr + 1, arr + n + 1);
     
-    // 두 개를 고르고 두 개의 합이 k 이하가 되는 경우의 수
-    // 정렬 후, upper_bound - 1 까지의 길이 계산
-    sort(begin(arr), end(arr));
     int cnt = 0;
-    auto last = next(end(arr), -1);
-    for(auto it = begin(arr); it != last; ++it){
-        int cur = *it;
-        int le = k-cur; // less or equal
-        
-        auto jt = upper_bound(next(it, 1), end(arr), le);
-
-        cnt += distance(it, jt) - 1;
+    int j = n;
+    for(int i=1; i<=n; ++i){
+        while(j > 1 && arr[i] + arr[j] > k)
+            --j;
+        if(j <= i)
+            break;
+        cnt += j-i;
     }
     cout << cnt << '\n';
-
     return 0;
 }
