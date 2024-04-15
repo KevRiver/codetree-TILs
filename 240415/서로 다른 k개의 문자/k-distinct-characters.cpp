@@ -8,17 +8,21 @@ int main() {
     int answer = 0;
     int n = str.size();
     int j = 0;
-    unordered_map<char, int> characters;
+    unordered_map<char, int> u;
+    auto is_exist = [&](char ch){
+        return u.find(ch) != u.end();
+    };
     for(int i=0; i<n; ++i){
-        while(j < n && characters.size() <= k){
-            characters[str[j]]++;
-            ++j;
+        while(j < n && u.size() <= k){
+            if(u.size() == k && !is_exist(str[j])) break;
+            u[str[j]]++;
+            j++;
         }
 
         answer = max(answer, j-i);
 
-        characters[str[i]]--;
-        if(characters[str[i]] == 0) characters.erase(str[i]);
+        u[str[i]]--;
+        if(u[str[i]] == 0) u.erase(str[i]);
     }
     cout << answer << '\n';
 
